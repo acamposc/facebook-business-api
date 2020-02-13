@@ -1,3 +1,3 @@
 #!/bin/bash
 source env.sh
-python3 functions.py
+PYTHONIOENCODING=utf-8 python3 functions.py

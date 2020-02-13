@@ -22,7 +22,7 @@ class FacebookAccess(object):
 access = FacebookAccess()
 
 # Debugging message 1
-print('FacebookAccess done')
+print('--- FacebookAccess done ---')
 
 class FacebookInit(object):
     """ Send secrets """
@@ -34,7 +34,7 @@ login = FacebookInit()
 login.login(access.app_id, access.app_secret, access.access_token)
 
 # Debugging message 2
-print('FacebookInit done')
+print('--- FacebookInit done ---')
 
 # List accounts
 class GetAccounts(object):
@@ -50,7 +50,7 @@ class GetAccounts(object):
 account_list = GetAccounts()
 
 # Debugging message 3
-print('GetAccounts done')
+print('--- GetAccounts done ---')
 
 # Get total amount of accounts
 def account_list_length():
@@ -66,7 +66,7 @@ account_list_length = account_list_length()
 account_list_range = list(range(account_list_length))
 
 # Debugging message 4
-print('account_list_length done')
+print('--- account_list_length done ---')
 
 # Listing account names
 def account_names(x):
@@ -74,11 +74,25 @@ def account_names(x):
         return print('no accounts here.')
     else:
         names = account_list.getaccountlist[x].api_get(fields=[adobjects.adaccount.AdAccount.Field.name])
-        #act = account_list.getaccountlist[x]
-        #names = act[adobjects.adaccount.AdAccount.Field.name]
-
         return names
 
-act_names = map(account_names, account_list_range)
+act_names_map = map(account_names, account_list_range)
 
-print(list(act_names))
+# Subsetting account names only.
+# https://stackoverflow.com/questions/38882721/python3-unicodeencodeerror-ascii-codec-cant-encode-character-xfc
+
+act_names = []
+def subset_names():
+    for i in act_names_map:
+        act_names.append(i['name'])
+    return act_names
+act_names = subset_names()
+print(act_names)
+#act_names = subset_names()
+#print(account_list.getaccountlist)
+
+# Debugging message 4
+#if not type(act_names) == 'list':
+#    print('--- act_names done ---')
+#else: 
+#    print('--- only 1 result ---')
